@@ -2,10 +2,23 @@
 // File: /app/Controller/PostsController.php
 class PostsController extends AppController {
     public $helpers = array('Html', 'Form', 'Session');
-    public $components = array('Session');
+    public $components = array('Session' ,  'Search.Prg' , 'Paginator');
 
     public function index() {
         $this->set('posts', $this->Post->find('all'));
+    }
+
+    public function find() {
+    	//おまじない
+        $this->Prg->commonProcess();
+        //ポストされた情報を受ける
+        $foo = $this->Prg->parsedParams();
+        //検索条件を設定する
+        $conditions = $this->Post->parseCriteria($foo);
+        //指定した条件で検索して$Postに値を格納する
+        $Posts = $this->Post->find('all', array('conditions' => $conditions));
+        //viewに渡す
+        $this->set('Posts', $Posts);
     }
 
     public function view($id) {

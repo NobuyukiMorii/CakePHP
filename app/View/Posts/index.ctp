@@ -1,9 +1,13 @@
 <!-- File: /app/View/Posts/index.ctp -->
 
 <h1>Blog posts</h1>
-<p><?php echo $this->Html->link('Add Post', array('action' => 'add')); ?></p>
-<table>
-    <tr>
+<button class="btn btn-default"><?php echo $this->Html->link('Add Post', array(
+    'action' => 'add')); ?></button>
+
+<div class="MarginTopBottom15"></div>
+
+<table class="table table-bordered">
+    <tr class="active">
         <th>Id</th>
         <th>Title</th>
         <th>Actions</th>
@@ -33,3 +37,33 @@
     <?php endforeach; ?>
 
 </table>
+
+<?php
+echo $this->Form->create('Post', array(
+    'action' => 'find',
+    'inputDefaults' => array(
+        'div' => 'form-group',
+        'wrapInput' => false,
+        'class' => 'form-control'
+    ),
+    'class' => 'well'
+));
+?>
+<fieldset>
+<legend>Legend</legend>
+
+<?php
+echo $this->Form->input('title',array(
+    'label' => 'Label name',
+    'placeholder' => 'Type something…',
+));
+?>
+
+
+<?php 
+echo $this->Form->submit('Submit', array(
+    'div' => 'form-group',
+    'class' => 'btn btn-default'
+)); 
+?>
+</fieldset>
