@@ -10,17 +10,24 @@
     <tr class="active">
         <th>Id</th>
         <th>Title</th>
+        <th>Body</th>
+        <th>Category</th>
         <th>Actions</th>
         <th>Created</th>
     </tr>
 
 <!-- ここで$posts配列をループして、投稿情報を表示 -->
-
     <?php foreach ($posts as $post): ?>
     <tr>
         <td><?php echo $post['Post']['id']; ?></td>
         <td>
             <?php echo $this->Html->link($post['Post']['title'], array('action' => 'view', $post['Post']['id']));?>
+        </td>
+        <td>
+            <?php echo h($post['Category']['name']);?>
+        </td>
+        <td>
+            <?php echo h($post['Post']['body']);?>
         </td>
         <td>
             <?php echo $this->Form->postLink(

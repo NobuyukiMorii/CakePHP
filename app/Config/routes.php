@@ -41,3 +41,6 @@
  * the built-in default routes.
  */
 	require CAKE . 'Config' . DS . 'routes.php';
+
+	Router::mapResources('recipes');
+	Router::parseExtensions('json');

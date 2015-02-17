@@ -20,4 +20,11 @@ class Post extends AppModel {
         )
     );
 
+    public $belongsTo = array(
+        'Category' => array(
+            'className'    => 'Category',
+            'foreignKey'   => 'category_id'
+        )
+    );
+
 }
