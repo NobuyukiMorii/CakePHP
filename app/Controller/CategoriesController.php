@@ -3,9 +3,19 @@
 class CategoriesController extends AppController {
     public $helpers = array('Html', 'Form', 'Session');
     public $components = array('Session' ,  'Search.Prg' , 'Paginator');
+    public $uses = array('Category' , 'Post');
 
-    public function index() {
-        $this->set('Categories', $this->Category->find('all'));
+    public function index($category_id) {
+        $Categories = $this->Category->find('all' ,array(
+            'conditions' => array('id' => $category_id)
+        ));
+        $CategoriesList = $this->Category->find('all' , array(
+            'recursive' => -1
+        ));
+
+        $this->set('Categories', $Categories);
+        $this->set('CategoriesList', $CategoriesList);
+        $this->set('category_id' , $category_id);
     }
 
     public function find() {

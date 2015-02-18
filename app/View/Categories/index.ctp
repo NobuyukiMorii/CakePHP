@@ -1,64 +1,47 @@
 <!-- File: /app/View/Categories/index.ctp -->
+<div class="row">
+    <h1>カテゴリー<?php echo h($Categories[0]['Category']['name']);?>の一覧</h1>
+</div>
 
-<h1>Blog categories</h1>
-<button class="btn btn-default"><?php echo $this->Html->link('Add Category', array(
-    'action' => 'add')); ?></button>
+<div class="row">
+    <div class="col-sm-9">
 
-<div class="MarginTopBottom15"></div>
+        <table class="table table-bordered">
+            <tr class="active">
+                <th>Id</th>
+                <th>Title</th>
+                <th>Created</th>
+            </tr>
 
-<table class="table table-bordered">
-    <tr class="active">
-        <th>Id</th>
-        <th>Title</th>
-        <th>Actions</th>
-    </tr>
+            <?php foreach ($Categories[0]['Post'] as $post): ?>
+            <tr>
+                <td><?php echo $post['id']; ?></td>
+                <td>
+                    <?php echo $this->Html->link($post['title'], array('controller' => 'Posts' , 'action' => 'view' , $post['id']));?>
+                </td>
+                <td>
+                    <?php echo h($post['created']);?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
 
-<!-- ここで$categories配列をループして、投稿情報を表示 -->
-    <?php foreach ($Categories as $Catagory): ?>
-    <tr>
-        <td><?php echo $Catagory['Category']['id']; ?></td>
-        <td>
-            <?php echo $this->Html->link($Catagory['Category']['name'], array('action' => 'view', $Catagory['Category']['id']));?>
-        </td>
-        <td>
-            <?php echo $this->Form->postLink(
-                'Delete',
-                array('action' => 'delete', $Catagory['Category']['id']),
-                array('confirm' => 'Are you sure?'));
-            ?>
-            <?php echo $this->Html->link('Edit', array('action' => 'edit', $Catagory['Category']['id'])); ?>
-        </td>
-    </tr>
-    <?php endforeach; ?>
+        </table>
+    </div>
+    <div class="col-sm-3">
+            <table class="table table-bordered">
+            <?php foreach ($CategoriesList as $Category): ?>
+            <tr>
+                <td>
+                    <?php if($category_id == $Category['Category']['id']): ?>
+                    <?php echo $Category['Category']['name'] ;?>
+                    <?php else: ?>
+                    <?php echo $this->Html->link($Category['Category']['name'], array('controller' => 'Categories' , 'action' => 'index' , $Category['Category']['id']));?>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
 
-</table>
+        </table>
 
-<?php
-echo $this->Form->create('Category', array(
-    'action' => 'find',
-    'inputDefaults' => array(
-        'div' => 'form-group',
-        'wrapInput' => false,
-        'class' => 'form-control'
-    ),
-    'class' => 'well'
-));
-?>
-<fieldset>
-<legend>Legend</legend>
-
-<?php
-echo $this->Form->input('title',array(
-    'label' => 'Label name',
-    'placeholder' => 'Type something…',
-));
-?>
-
-
-<?php 
-echo $this->Form->submit('Submit', array(
-    'div' => 'form-group',
-    'class' => 'btn btn-default'
-)); 
-?>
-</fieldset>
+    </div>
+</div>
