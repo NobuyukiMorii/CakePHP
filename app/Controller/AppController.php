@@ -18,9 +18,7 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 App::uses('Controller', 'Controller');
-
 /**
  * Application Controller
  *
@@ -31,37 +29,32 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-    public $helpers = array(
-        'Session',
-        'Html' => array('className' => 'BoostCake.BoostCakeHtml'),
-        'Form' => array('className' => 'BoostCake.BoostCakeForm'),
-        'Paginator' => array('className' => 'BoostCake.BoostCakePaginator'),
-    );
-
-    public $components = array(
-        'DebugKit.Toolbar',
-	    'Session',
-	    'Auth' => array(
-	        'loginRedirect' => array('controller' => 'posts', 'action' => 'index'),
-	        'logoutRedirect' => array(
-	            'controller' => 'pages',
-	            'action' => 'display',
-	            'home'
-	        ),
-	        'authorize' => array('Controller'), // この行を追加しました
-	    )
-    );
-
-    public function beforeFilter() {
-        $this->Auth->allow('index', 'view');
+	public $helpers = array(
+		'Html' => array('className' => 	'BoostCake.BoostCakeHtml'),
+		'Form' => array('className' => 'BoostCake.BoostCakeForm'),
+		'Paginator' => array('className' => 'BoostCake.BoostCakePaginator')
+	);
+	public $components = array(
+        'Acl',
+		'DebugKit.Toolbar', 
+		'Auth' => array(
+            'loginRedirect' => array(
+                'controller' => 'posts',
+                'action' => 'index'
+            ),
+            'logoutRedirect' => array(
+                'controller' => 'users',
+                'action' => 'login'
+            ),
+            'authenticate' => array(
+                'Form' => array(
+                    'passwordHasher' => 'Simple'
+                )
+            )
+        )
+	);
+  	public function beforeFilter() {
+        // $this->Auth->allow('index', 'view');
     }
-
-	public function isAuthorized($user) {
-	    if (isset($user['role']) && $user['role'] === 'admin') {
-	        return true;
-	    }
-
-	    // デフォルトは拒否
-	    return false;
-	}
 }
+?>

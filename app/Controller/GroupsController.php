@@ -4,6 +4,11 @@ class GroupsController extends AppController {
     public $helpers = array('Html', 'Form', 'Session');
     public $components = array('Session' ,  'Search.Prg' , 'Paginator');
     public $uses = array('Group' , 'Post' , 'Group' , 'User');
+    
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow('*');
+    }
 
     public function index() {
         $this->set('groups', $this->Group->find('all'));

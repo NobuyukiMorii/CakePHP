@@ -8,6 +8,9 @@
         echo $this->Form->input('role', array(
             'options' => array('admin' => 'Admin', 'author' => 'Author')
         ));
+        echo $this->Form->input('group_id', array(
+            'options' => $groups
+        ));
     ?>
     </fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
